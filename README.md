@@ -1,4 +1,4 @@
-Div PHP Ajax Mapping
+# Div PHP Ajax Mapping
 
 Mapping PHP data, functions and methods in JavaScript
 
@@ -17,8 +17,7 @@ In the server:
 
 // Include the library 
 
-include "divAjaxMapping.php";
-include "divAjaxMappingServer.php";  
+include "divAjaxMapping.php"; 
 
 // The program 
 // Note: the programa can be located in an external file 
@@ -28,7 +27,7 @@ function sum($x, $y){
 }
 
 class Enterprise{
-  public function getEmployees(){
+  public static function getEmployees(){
       return array(
         array("name" => "Thomas Hardy", "salary" => 1500),  
         array("name" => "Christina Berglund", "salary" => 1200)  
@@ -38,12 +37,12 @@ class Enterprise{
 
 // Server instance ...
 
-$server = new divAjaxMappingServer(); 
+$server = new divAjaxMapping(); 
 
 // ... Add methods ...
 
-$server->addMethod("sum", "x,y"); 
-$server->addMethod("Enterprise::getEmployees", "x,y"); 
+$server->addMethod("sum"); 
+$server->addClass("Enterprise); 
 
 // ... and go!
 $server->go(); 
@@ -54,13 +53,8 @@ In the client:
 --------------------------------------------
 <script type = "text/javascript" src="divAjaxMapping.js"></script>
 <script type = "text/javascript">
-
-    var client = new divAjaxMappingClient("server.php");
-    
-    var sum = client.sum(20, 10);
-    
-    var employees = client.Enterprise.getEmployees();
-    
+    var map = new divAjaxMapping("server.php");
+    var sum = server.sum(20, 10);
+    var employees = map.Enterprise.getEmployees();
     var firstEmployeeName = employees[0]['name'];
-
 </script>
