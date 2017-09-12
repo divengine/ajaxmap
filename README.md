@@ -11,7 +11,7 @@ With this class you can call a functions and methods via AJAX.
 For example:
 
 --------------------------------------------
-In the server:
+Server side:
 --------------------------------------------
 ```php
 <?php
@@ -51,7 +51,7 @@ $server->go();
 ```
 
 --------------------------------------------
-In the client:
+Client side:
 --------------------------------------------
 ```xhtml
 <script type = "text/javascript" src="divAjaxMapping.js"></script>
