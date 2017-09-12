@@ -97,7 +97,7 @@ class divAjaxMapping
                     }
                     $class_name .= '::';
                 } else {
-                    throw new Exception("-- $class_name::$name -- is not static and public method");
+                    throw new Exception("-- $class_name::$name -- is not a static or public method");
                 }
             }
         } else {
