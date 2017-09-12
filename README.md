@@ -13,6 +13,7 @@ For example:
 --------------------------------------------
 In the server:
 --------------------------------------------
+```php
 <?php
 
 // Include the library 
@@ -47,10 +48,12 @@ $server->addClass("Enterprise);
 // ... and go!
 $server->go(); 
 
-?>
+```
+
 --------------------------------------------
 In the client:
 --------------------------------------------
+```xhtml
 <script type = "text/javascript" src="divAjaxMapping.js"></script>
 <script type = "text/javascript">
     var map = new divAjaxMapping("server.php");
@@ -58,3 +61,4 @@ In the client:
     var employees = map.Enterprise.getEmployees();
     var firstEmployeeName = employees[0]['name'];
 </script>
+```
