@@ -252,9 +252,10 @@ class divAjaxMapping
 		}
 		$i    = 0;
 		$data = $this->data;
+		$total_clases = count($clases);
 		foreach($clases as $key => $c)
 		{
-			echo $i == 0 && $j > 0 ? "," : "";
+			echo $i == 0 && $j > $total_clases ? "," : "";
 			echo $i ++ > 0 ? "," : "";
 			echo "$c";
 			if(isset($data[ $key ]))
