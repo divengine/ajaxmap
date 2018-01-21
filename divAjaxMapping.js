@@ -94,7 +94,7 @@ var divAjaxMapping = function (server) {
             if (k++ > 0)
                 s = s + "&";
             s = s + encodeURIComponent(i) + "="
-                + encodeURIComponent(this.serialize(params.data[i]));
+                + this.serialize(params.data[i]);
         }
 
         xhr.send(s);
@@ -106,6 +106,12 @@ var divAjaxMapping = function (server) {
         return result;
     };
 
+    /**
+     * PHP Serializer
+     *
+     * @param mixed_value
+     * @returns {*}
+     */
     this.serialize = function (mixed_value) {
         var _getType = function (inp) {
             var type = typeof inp, match;
@@ -132,6 +138,51 @@ var divAjaxMapping = function (server) {
             }
             return type;
         };
+
+        var type = _getType(mixed_value);
+        var val, ktype = '';
+        switch (type) {
+            case"function":
+                val = "";
+                break;
+            case"boolean":
+                val = "b:" + (mixed_value ? "1" : "0");
+                break;
+            case"number":
+                val = (Math.round(mixed_value) == mixed_value ? "i" : "d") + ":" + mixed_value;
+                break;
+            case"string":
+                mixed_value = this.utf8_encode(mixed_value);
+                val = "s:" + encodeURIComponent(mixed_value).replace(/%../g, 'x').length + ":\"" + mixed_value + "\"";
+                break;
+            case"array":
+            case"object":
+                val = "a";
+                var count = 0;
+                var vals = "";
+                var okey;
+                var key;
+                for (key in mixed_value) {
+                    ktype = _getType(mixed_value[key]);
+                    if (ktype == "function") {
+                        continue;
+                    }
+                    okey = (key.match(/^[0-9]+$/) ? parseInt(key, 10) : key);
+                    vals += this.serialize(okey) +
+                        this.serialize(mixed_value[key]);
+                    count++;
+                }
+                val += ":" + count + ":{" + vals + "}";
+                break;
+            case"undefined":
+            default:
+                val = "N";
+                break;
+        }
+        if (type != "object" && type != "array") {
+            val += ";";
+        }
+        return val;
     };
     /**
      * Call a remote PHP method
