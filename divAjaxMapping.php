@@ -335,7 +335,7 @@ class divAjaxMapping
 				$instruction .= $i ++ > 0 ? ", " : "";
 				if(isset($_POST[ $p ]))
 				{
-					$instruction .= '$_POST["' . $p . '"]';
+					$instruction .= 'unserialize($_POST["' . $p . '"])';
 				}
 				else
 				{
