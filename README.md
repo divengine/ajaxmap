@@ -18,7 +18,7 @@ Server side:
 
 // Include the library 
 
-include "divAjaxMapping.php"; 
+include "divAjaxMapping"; 
 
 // The program 
 // Note: the programa can be located in an external file 
@@ -29,12 +29,12 @@ function sum($x, $y){
 
 class Enterprise{
   public static function getEmployees(){
-      return array(
-        array("name" => "Thomas Hardy", "salary" => 1500),  
-        array("name" => "Christina Berglund", "salary" => 1200)  
-      );  
+      return [
+        ["name" => "Thomas Hardy", "salary" => 1500],  
+        ["name" => "Christina Berglund", "salary" => 1200] 
+      ];  
     } 
-} 
+}
 
 // Server instance ...
 

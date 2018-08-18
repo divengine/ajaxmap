@@ -1,7 +1,4 @@
 /**
- * Div PHP Ajax Mapping
- *
- * Mapping PHP data, functions and methods in JavaScript
  *
  * Client side
  *
@@ -18,8 +15,8 @@
  * this program as the file LICENSE.txt; if not, please see
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
  *
- * @author Rafa Rodriguez <rafacuba2015@gmail.com>
- * @link http://divengine.com/solutions/div-php-ajax-mapping
+ * @author Rafa Rodriguez <rafageist@hotmail.com>
+ * @link https://divengine.github.io
  * @version 1.1
  */
 
@@ -34,16 +31,17 @@ var DIV_AJAX_MAPPING_METHOD_NOT_EXISTS = "DIV_AJAX_MAPPING_METHOD_NOT_EXISTS";
 /**
  * Client instance.
  *
- * @param {Object}
- *            params - params.server is a string that contain the server address
+ * @param {Object} params - params.server is a string that contain the server address
  *
  */
 
 /*
- * How to use? var client = new divAjaxMapping({server:
- * "http://example.com/server.php"}); var persons =
- * client.Company.getEmployees(); var companyPhone = client.Company.phone; var
- * enterprise = client.getEnterprise();
+ * How to use?
+ *
+ * var client = new divAjaxMapping({server: "http://example.com/server.php"});
+ * var persons = client.Company.getEmployees();
+ * var companyPhone = client.Company.phone;
+ * var enterprise = client.getEnterprise();
  */
 
 var divAjaxMapping = function (server) {
@@ -188,8 +186,8 @@ var divAjaxMapping = function (server) {
     /**
      * UTF8 Encode
      *
-     * @param argString
-     * @returns {string}
+     * @param {string} argString
+     * @return {string}
      */
     this.utf8_encode = function (argString) {
         var string = (argString + '');
@@ -226,12 +224,9 @@ var divAjaxMapping = function (server) {
     /**
      * Call a remote PHP method
      *
-     * @param {Object}
-     *            server
-     * @param {Object}
-     *            method
-     * @param {Object}
-     *            params
+     * @param {string} server
+     * @param {string} method
+     * @param {string} params
      */
     this.call = function (server, method, params) {
 
@@ -246,12 +241,9 @@ var divAjaxMapping = function (server) {
     /**
      * Login on server
      *
-     * @param {Object}
-     *            server
-     * @param {Object}
-     *            username
-     * @param {Object}
-     *            password
+     * @param {string} server
+     * @param {string} username
+     * @param {string} password
      */
     this.login = function (server, username, password) {
         var result = this.ajax({
@@ -267,8 +259,7 @@ var divAjaxMapping = function (server) {
     /**
      * Logout on server
      *
-     * @param {Object}
-     *            server
+     * @param {string} server
      */
     this.logout = function (server) {
         return this.ajax({

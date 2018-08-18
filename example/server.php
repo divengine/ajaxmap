@@ -3,7 +3,7 @@
 /**
  * Div PHP Ajax Mapping
  * Mapping PHP data, functions and methods in JavaScript
- * 
+ *
  * Example PHP script
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,124 +18,87 @@
  * You should have received a copy of the GNU General Public License
  * along with this program as the file LICENSE.txt; if not, please see
  * http://www.gnu.org/licenses/gpl.txt.
- * 
- * @author Rafa Rodriguez <rafacuba2015@gmail.com>
- * @link http://divengine.com/solutions/div-php-ajax-mapping
+ *
+ * @author Rafa Rodriguez <rafageist@hotmail.com>
+ * @link https://divengine.github.io/
  * @version 1.0
  */
+
 session_start();
 
 include "../divAjaxMapping.php";
-include "../divAjaxMappingServer.php";
 
-// Methods
-function getServerTime ()
+// A function
+function getServerTime()
 {
     return date("y-m-d h:i:s");
 }
 
-function getClientIP ()
-{
-    return divAjaxMapping::getClientIPAddress();
-}
-
+// A class with static method
 class Encryption
 {
 
-    public function getMd5 ($v)
+    public static function getMd5($v)
     {
         return md5($v);
     }
 
-    public function getSha1 ($v)
+    public function getSha1($v)
     {
         return sha1($v);
     }
 }
 
-function getPrivateData ()
+// 
+class MyAjaxServer extends divAjaxMapping
 {
-    return "The number of your strong box is 53323";
-}
 
-// Hook implements
-function divAjaxMapping_auth ($user, $password)
-{
-    return $user == "iam" && $password == "free";
-}
+    public function __construct($name)
+    {
+        // Functions
+        $this->addMethod("getServerTime", false, false, array(), "Return the date and time of the server");
 
-function divAjaxMapping_chkma ($user, $method)
-{
-    return $user == "iam";
+        // Methods
+        $this->addMethod("getClientIP");
+        $this->addMethod("getPrivateData", false, true);
+        $this->addMethod("getProducts", false, true);
+
+        // Data
+        $this->addData("Date", date("D M-d \of Y"));
+        $this->addData("Server Description", "This is an example divAjaxMapping");
+
+        parent::__construct($name);
+    }
+
+    public function getClientIP()
+    {
+        return self::getClientIPAddress();
+    }
+
+    public function getPrivateData()
+    {
+        return "The number of your strong box is 53323";
+    }
+
+    public function getProducts()
+    {
+        return array(
+            array(
+                "Name" => "Chai",
+                "QuantityPerUnit" => "10 boxes x 20 bags",
+                "UnitPrice" => 18
+            ),
+            array(
+                "Name" => "Chang",
+                "QuantityPerUnit" => "24 - 12 oz bottles",
+                "UnitPrice" => 19
+            )
+        );
+    }
 }
 
 // Server instance
 
-$server = new divAjaxMappingServer("This is an example of divAjaxMapping server");
-
-// Functions
-$server->addMethod("getServerTime", array(), false, false, array(), 
-        "Return the date and time of the server");
-$server->addMethod("getClientIP");
-$server->addMethod("getPrivateData", array(), false, true);
-
-// Methods
-$server->addMethod("Encryption::getMd5", "v");
-$server->addMethod("Encryption::getSha1", "v");
-
-// Data
-$server->addData("Date", date("D M-d \of Y"));
-$server->addData("Server Description", 
-        "This is an example divAjaxMapping server. For more information, go to the <a href = \"http://salvipascual.com/phphotmap\">phpHotMap site</a>");
-$server->addData("Products", 
-        array(
-                array(
-                        "ProductName" => "Chai",
-                        "QuantityPerUnit" => "10 boxes x 20 bags",
-                        "UnitPrice" => 18
-                ),
-                array(
-                        "ProductName" => "Chang",
-                        "QuantityPerUnit" => "24 - 12 oz bottles",
-                        "UnitPrice" => 19
-                )
-        ));
-
-$person1 = new stdClass();
-$person1->name = "Peter Boston";
-$person1->age = 45;
-$person1->notes = array(
-        "I need some products" => array(
-                array(
-                        "ProductName" => "Chai",
-                        "Prices" => array(
-                                18,
-                                20,
-                                34
-                        )
-                ),
-                array(
-                        "ProductName" => "Chang",
-                        "Prices" => array(
-                                19,
-                                40,
-                                55
-                        )
-                )
-        ),
-        "I have much money!" => "$1,000,000"
-);
-
-$person2 = new stdClass();
-$person2->name = "Michael Roller";
-$person2->age = 24;
-$person2->notes = array(
-        "My shop is terrific!"
-);
-
-$server->addData("Persons", array(
-        $person1,
-        $person2
-));
-
+$server = new MyAjaxServer("This is an example of divAjaxMapping server");
+$server->addClass('Encryption');
 $server->go();
