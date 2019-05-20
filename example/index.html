@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Div Ajax Mapping Example</title>
+    <link href="assets/style.css" rel="stylesheet" />
+</head>
+<body>
+<div class="page">
+    <div class="banner">
+        [ [ ] ] Div Software Solutions - <a href="https://divengine.github.io">divengine.github.io</a>
+    </div>
+    <h1>Div Ajax Mapping</h1>
+    <h2>Examples</h2>
+
+    <pre>
+	<b>var</b> server = <b>new</b> divAjaxMapping("server.php");</pre>
+
+    <fieldset>
+        <legend>Calling a function</legend>
+        <button onclick="alert(server.getServerTime());">Show server time</button>
+        <pre>&gt;&gt; server.getServerTime()</pre>
+    </fieldset>
+    <fieldset>
+        <legend>Products</legend>
+        <ul id="products">
+
+        </ul>
+        <button onclick="loadProducts();">Load products</button>
+        <pre>&gt;&gt; server.getProducts()
+			</pre>
+    </fieldset>
+    <fieldset>
+        <legend>Calling a static method</legend>
+        <table width="100%">
+            <tr>
+                <td><label>Type a text ... </label><br/>
+                    <input size="32" onkeyup="document.getElementById('md5Result').value = server.Encryption.getMd5(this.value);">
+                </td>
+                <td>
+                    <pre>&gt;&gt; server.Encryption.getMd5() &gt;&gt;</pre>
+                </td>
+                <td><label>... and get the MD5: </label><br/> <input disabled="disabled" id="md5Result" size="32"></td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+
+<script src="assets/divAjaxMapping.js"></script>
+<script src="assets/client.js"></script>
+</body>
+</html>
