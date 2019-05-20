@@ -18,7 +18,7 @@ Server side:
 
 // Include the library 
 
-include "divAjaxMapping"; 
+include "divAjaxMapping.php"; 
 
 // The program 
 // Note: the programa can be located in an external file 
