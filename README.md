@@ -43,7 +43,7 @@ $server = new divAjaxMapping();
 // ... Add methods ...
 
 $server->addMethod("sum"); 
-$server->addClass("Enterprise); 
+$server->addClass("Enterprise"); 
 
 // ... and go!
 $server->go(); 
