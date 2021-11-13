@@ -4,17 +4,25 @@
   "keywords": [
     "ajax", "front-end"
   ],
-  "homepage": "https://divengine.com",
+  "homepage": "https://divengine.org",
   "version": "1.2",
   "require": {
     "php": ">=5.4.0"
   },
+  "authors": [
+    {
+      "name": "Rafa Rodriguez",
+      "email": "rafageist@hotmail.com",
+      "homepage": "https://rafageist.com",
+      "role": "Creator"
+    }
+  ],
   "license": [
     "GPL-3.0+"
   ],
   "autoload": {
-    "files": [
-      "divAjaxMapping.php"
-    ]
+    "psr-4": {
+      "divengine\\": "src/"
+    }
   }
 }

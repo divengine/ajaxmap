@@ -16,8 +16,8 @@
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
  *
  * @author Rafa Rodriguez <rafageist@hotmail.com>
- * @link https://divengine.github.io
- * @version 1.1
+ * @link https://divengine.org
+ * @version 1.2
  */
 
 var DIV_AJAX_MAPPING_ACCESS_DENIED_HOST = "DIV_AJAX_MAPPING_ACCESS_DENIED_HOST";
@@ -38,13 +38,13 @@ var DIV_AJAX_MAPPING_METHOD_NOT_EXISTS = "DIV_AJAX_MAPPING_METHOD_NOT_EXISTS";
 /*
  * How to use?
  *
- * var client = new divAjaxMapping({server: "http://example.com/server.php"});
+ * var client = new ajaxmap({server: "http://example.com/server.php"});
  * var persons = client.Company.getEmployees();
  * var companyPhone = client.Company.phone;
  * var enterprise = client.getEnterprise();
  */
 
-var divAjaxMapping = function (server) {
+var ajaxmap = function (server) {
 
     /**
      * Get a valiXMLHttpRequest object

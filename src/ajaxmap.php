@@ -1,5 +1,7 @@
 <?php
 
+namespace divengine;
+
 /**
  * Div PHP Ajax Mapping
  *
@@ -20,7 +22,7 @@
  * http://www.gnu.org/licenses/gpl.txt.
  *
  * @author  Rafa Rodriguez <rafageist@hotmail.com>
- * @version 1.2
+ * @version 1.3
  *
  */
 define("DIV_AJAX_MAPPING_ACCESS_DENIED_HOST", "DIV_AJAX_MAPPING_ACCESS_DENIED_HOST");
@@ -34,13 +36,13 @@ define("DIV_AJAX_MAPPING_METHOD_NOT_EXISTS", "DIV_AJAX_MAPPING_METHOD_NOT_EXISTS
 /**
  * How to use?
  *
- * $server = new divAjaxMapping(); // Server instance
+ * $server = new ajaxmap(); // Server instance
  * $server->addMethod("getEnterprise"); // Add public method
  * $server->addMethod("Company::getEmployees"); // Add private method
  * $server->addData("Company", ["name" => "My Company", "phone" => (444)-485758"]); // Add some data
  * $server->go();
  */
-class divAjaxMapping
+class ajaxmap
 {
 
     private $methods = [];
