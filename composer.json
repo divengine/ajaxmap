@@ -1,5 +1,5 @@
 {
-  "name": "divengine/div-ajax-mapping",
+  "name": "divengine/ajaxmap",
   "description": "Div Ajax Mapping allow mapping PHP functions, static methods and arbitrary data when instance a JavaScript class",
   "keywords": [
     "ajax", "front-end"
