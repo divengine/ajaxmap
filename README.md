@@ -18,7 +18,7 @@ Server side:
 
 // Include the library 
 
-include "divAjaxMapping.php"; 
+include "ajaxmap.php"; 
 
 // The program 
 // Note: the programa can be located in an external file 
@@ -38,7 +38,7 @@ class Enterprise{
 
 // Server instance ...
 
-$server = new divAjaxMapping(); 
+$server = new ajaxmap(); 
 
 // ... Add methods ...
 
@@ -54,9 +54,9 @@ $server->go();
 Client side:
 --------------------------------------------
 ```xhtml
-<script type = "text/javascript" src="divAjaxMapping.js"></script>
+<script type = "text/javascript" src="ajaxmap.js"></script>
 <script type = "text/javascript">
-    var map = new divAjaxMapping("server.php");
+    var map = new ajaxmap("server.php");
     var sum = map.sum(20, 10);
     var employees = map.Enterprise.getEmployees();
     var firstEmployeeName = employees[0]['name'];
