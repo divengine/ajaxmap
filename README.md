@@ -16,12 +16,7 @@ Server side:
 ```php
 <?php
 
-// Include the library 
-
-include "ajaxmap.php"; 
-
-// The program 
-// Note: the programa can be located in an external file 
+use divengine\ajaxmap;
 
 function sum($x, $y){
   return $x + $y; 
