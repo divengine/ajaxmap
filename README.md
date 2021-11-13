@@ -57,7 +57,7 @@ Client side:
 <script type = "text/javascript" src="divAjaxMapping.js"></script>
 <script type = "text/javascript">
     var map = new divAjaxMapping("server.php");
-    var sum = server.sum(20, 10);
+    var sum = map.sum(20, 10);
     var employees = map.Enterprise.getEmployees();
     var firstEmployeeName = employees[0]['name'];
 </script>
