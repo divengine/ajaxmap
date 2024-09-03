@@ -46,7 +46,7 @@ $server->go();
 ## Client side
 
 ```xhtml
-<script type = "text/javascript" src="ajaxmap.js"></script>
+<script type = "text/javascript" src="server.php?lib"></script>
 <script type = "text/javascript">
     var map = new ajaxmap("server.php");
     var sum = map.sum(20, 10);
