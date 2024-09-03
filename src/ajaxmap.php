@@ -21,10 +21,11 @@ namespace divengine;
  * along with this program as the file LICENSE.txt; if not, please see
  * http://www.gnu.org/licenses/gpl.txt.
  *
- * @author  Rafa Rodriguez <rafageist@hotmail.com>
- * @version 1.3
- *
+ * @author  Rafa Rodriguez <rafageist@divengine.com>
+ * @version 2.0
+ * @link https://divengine.org
  */
+
 define("DIV_AJAX_MAPPING_ACCESS_DENIED_HOST", "DIV_AJAX_MAPPING_ACCESS_DENIED_HOST");
 define("DIV_AJAX_MAPPING_ACCESS_DENIED_USER", "DIV_AJAX_MAPPING_ACCESS_DENIED_USER");
 define("DIV_AJAX_MAPPING_LOGIN_SUCCESSFUL", "DIV_AJAX_MAPPING_LOGIN_SUCCESSFUL");
@@ -89,7 +90,7 @@ class ajaxmap
             $parts = explode("::", $name);
             $class_name = $parts[0];
             $name = $parts[1];
-            $r = new ReflectionClass($class_name);
+            $r = new \ReflectionClass($class_name);
             if (method_exists($class_name, $name)) {
                 $m = $r->getMethod($name);
                 if ($m->isStatic() && $m->isPublic()) {
@@ -100,18 +101,18 @@ class ajaxmap
                     }
                     $class_name .= '::';
                 } else {
-                    throw new Exception("-- $class_name::$name -- is not a static or public method");
+                    throw new \Exception("-- $class_name::$name -- is not a static or public method");
                 }
             }
         } else {
             if (is_callable($name)) {
-                $r = new ReflectionFunction($name);
+                $r = new \ReflectionFunction($name);
                 $p = $r->getParameters();
                 foreach ($p as $param) {
                     $params[] = $param->getName();
                 }
             } else {
-                $r = new ReflectionObject($this);
+                $r = new \ReflectionObject($this);
                 if (method_exists($this, $name)) {
                     $m = $r->getMethod($name);
                     $p = $m->getParameters();
@@ -140,12 +141,12 @@ class ajaxmap
      * Add static methods of entire class
      *
      * @param string $class_name
-     * @throws Exception
+     * @throws \Exception
      */
     public function addClass($class_name)
     {
         if (class_exists($class_name)) {
-            $r = new ReflectionClass($class_name);
+            $r = new \ReflectionClass($class_name);
             $m = $r->getMethods();
             foreach ($m as $method) {
                 if ($method->isStatic() && $method->isPublic()) {
@@ -300,7 +301,7 @@ class ajaxmap
         // Execute hook after
         $this->_after($method);
 
-        echo self::jsonEncode($result);
+        echo json_encode($result);
     }
 
     /**
@@ -316,62 +317,6 @@ class ajaxmap
         if (is_object($value)) if (method_exists($value, "__toString")) return true;
 
         return false;
-    }
-
-    /**
-     * JSON Encode
-     *
-     * @param mixed $data
-     *
-     * @return string
-     */
-    final static function jsonEncode($data)
-    {
-        if (is_array($data) || is_object($data)) {
-            $islist = is_array($data) && (empty($data) || array_keys($data) === range(0, count($data) - 1));
-
-            if ($islist) $json = '[' . implode(',', array_map('self::jsonEncode', $data)) . ']';
-            else {
-                $items = [];
-                foreach ($data as $key => $value) {
-                    $items[] = self::jsonEncode("$key") . ':' . self::jsonEncode($value);
-                }
-                $json = '{' . implode(',', $items) . '}';
-            }
-        } elseif (self::isString($data)) {
-            $string = '"' . addcslashes($data, "\\\"\n\r\t/" . chr(8) . chr(12)) . '"';
-            $json = '';
-            $len = strlen($string);
-            for ($i = 0; $i < $len; $i++) {
-                $char = $string[$i];
-                $c1 = ord($char);
-                if ($c1 < 128) {
-                    $json .= ($c1 > 31) ? $char : sprintf("\\u%04x", $c1);
-                    continue;
-                }
-                $c2 = ord($string[++$i]);
-                if (($c1 & 32) === 0) {
-                    $json .= sprintf("\\u%04x", ($c1 - 192) * 64 + $c2 - 128);
-                    continue;
-                }
-                $c3 = ord($string[++$i]);
-                if (($c1 & 16) === 0) {
-                    $json .= sprintf("\\u%04x", (($c1 - 224) << 12) + (($c2 - 128) << 6) + ($c3 - 128));
-                    continue;
-                }
-                $c4 = ord($string[++$i]);
-                if (($c1 & 8) === 0) {
-                    $u = (($c1 & 15) << 2) + (($c2 >> 4) & 3) - 1;
-
-                    $w1 = (54 << 10) + ($u << 6) + (($c2 & 15) << 2) + (($c3 >> 4) & 3);
-                    $w2 = (55 << 10) + (($c3 & 15) << 6) + ($c4 - 128);
-                    $json .= sprintf("\\u%04x\\u%04x", $w1, $w2);
-                }
-            }
-        } else
-            $json = strtolower(var_export($data, true));
-
-        return $json;
     }
 
     /**

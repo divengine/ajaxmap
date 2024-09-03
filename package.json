@@ -1,0 +1,14 @@
+{
+    "name": "@divengine/ajaxmap",
+    "version": "2.0.0",
+    "description": "Mapping PHP data, functions and methods from PHP to JavaScript",
+    "main": "src/ajaxmap.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "author": "Rafa Rodriguez",
+    "license": "GPL",
+    "dependencies": {
+        "jest": "^29.7.0"
+    }
+}

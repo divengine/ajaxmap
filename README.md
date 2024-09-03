@@ -38,7 +38,7 @@ $server = new ajaxmap();
 // ... Add methods ...
 
 $server->addMethod("sum"); 
-$server->addClass("Enterprise"); 
+$server->addClass(Enterprise::class); 
 
 // ... and go!
 $server->go(); 
