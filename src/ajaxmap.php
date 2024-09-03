@@ -388,11 +388,13 @@ class ajaxmap
 
     /**
      * Login, logout, publish methods or execute a method
-     *
-     * @return boolean
      */
     public function go()
     {
+        if (isset($_GET['lib'])) {
+            readfile(__DIR__ . '/ajaxmap.js');
+            return;
+        }
 
         // Client need login?
         if (isset($_GET['login'])) {

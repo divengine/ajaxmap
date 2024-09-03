@@ -32,13 +32,11 @@
     </fieldset>
     <fieldset>
         <legend>Calling a static method</legend>
+        <pre>&gt;&gt; server.Encryption.getMd5() &gt;&gt;</pre>
         <table width="100%">
             <tr>
                 <td><label>Type a text ... </label><br/>
                     <input size="32" onkeyup="document.getElementById('md5Result').value = server.Encryption.getMd5(this.value);">
-                </td>
-                <td>
-                    <pre>&gt;&gt; server.Encryption.getMd5() &gt;&gt;</pre>
                 </td>
                 <td><label>... and get the MD5: </label><br/> <input disabled="disabled" id="md5Result" size="32"></td>
             </tr>
@@ -46,7 +44,7 @@
     </fieldset>
 </div>
 
-<script src="assets/ajaxmap.js"></script>
+<script src="server.php?lib"></script>
 <script src="assets/client.js"></script>
 </body>
 </html>
