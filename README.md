@@ -2,17 +2,16 @@
 
 Mapping PHP data, functions and methods in JavaScript
 
-An open source library for JavaScript and PHP, that 
-allow mapping the PHP functions, static methods of classes and 
-arbitrary data when instance a JavaScript class. 
+An open source library for JavaScript and PHP, that
+allow mapping the PHP functions, static methods of classes and
+arbitrary data when instance a JavaScript class.
 
-With this class you can call a functions and methods via AJAX. 
+With this class you can call a functions and methods via AJAX.
 
 For example:
 
---------------------------------------------
-Server side:
---------------------------------------------
+## Server side
+
 ```php
 <?php
 
@@ -42,14 +41,12 @@ $server->addClass(Enterprise::class);
 
 // ... and go!
 $server->go(); 
-
 ```
 
---------------------------------------------
-Client side:
---------------------------------------------
+## Client side
+
 ```xhtml
-<script type = "text/javascript" src="ajaxmap.js"></script>
+<script type = "text/javascript" src="server.php?lib"></script>
 <script type = "text/javascript">
     var map = new ajaxmap("server.php");
     var sum = map.sum(20, 10);

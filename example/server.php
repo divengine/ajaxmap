@@ -1,104 +1,81 @@
 <?php
 
-/**
- * Div PHP Ajax Mapping
- * Mapping PHP data, functions and methods in JavaScript
- *
- * Example PHP script
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
- * for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program as the file LICENSE.txt; if not, please see
- * http://www.gnu.org/licenses/gpl.txt.
- *
- * @author Rafa Rodriguez <rafageist@hotmail.com>
- * @link https://divengine.github.io/
- * @version 1.0
- */
+declare(strict_types=1);
 
 session_start();
 
-include "../divAjaxMapping.php";
+use divengine\ajaxmap;
 
-// A function
-function getServerTime()
+require_once __DIR__ . '/../src/ajaxmap.php';
+
+// Function to get the current server time
+function getServerTime(): string
 {
-    return date("y-m-d h:i:s");
+    return date('Y-m-d H:i:s');
 }
 
-// A class with static method
+// Encryption class with static and instance methods
 class Encryption
 {
-
-    public static function getMd5($v)
+    public static function getMd5(string $value): string
     {
-        return md5($v);
+        return md5($value);
     }
 
-    public function getSha1($v)
+    public function getSha1(string $value): string
     {
-        return sha1($v);
+        return sha1($value);
     }
 }
 
-// 
-class MyAjaxServer extends divAjaxMapping
+// MyAjaxServer class extending ajaxmap
+class MyAjaxServer extends ajaxmap
 {
-
-    public function __construct($name)
+    public function __construct(string $name)
     {
         // Functions
-        $this->addMethod("getServerTime", false, false, array(), "Return the date and time of the server");
+        $this->addMethod('getServerTime', false, false, [], 'Returns the current server date and time');
 
         // Methods
-        $this->addMethod("getClientIP");
-        $this->addMethod("getPrivateData", false, true);
-        $this->addMethod("getProducts", false, true);
+        $this->addMethod('getClientIP');
+        $this->addMethod('getPrivateData', false, true);
+        $this->addMethod('getProducts', false, true);
 
         // Data
-        $this->addData("Date", date("D M-d \of Y"));
-        $this->addData("Server Description", "This is an example divAjaxMapping");
+        $this->addData('Date', date('D M-d \of Y'));
+        $this->addData('Server Description', 'This is an example of ajaxmap');
 
         parent::__construct($name);
     }
 
-    public function getClientIP()
+    public function getClientIP(): string
     {
         return self::getClientIPAddress();
     }
 
-    public function getPrivateData()
+    public function getPrivateData(): string
     {
-        return "The number of your strong box is 53323";
+        return 'The number of your strong box is 53323';
     }
 
-    public function getProducts()
+    public function getProducts(): array
     {
-        return array(
-            array(
-                "Name" => "Chai",
-                "QuantityPerUnit" => "10 boxes x 20 bags",
-                "UnitPrice" => 18
-            ),
-            array(
-                "Name" => "Chang",
-                "QuantityPerUnit" => "24 - 12 oz bottles",
-                "UnitPrice" => 19
-            )
-        );
+        return [
+            [
+                'Name' => 'Chai',
+                'QuantityPerUnit' => '10 boxes x 20 bags',
+                'UnitPrice' => 18,
+            ],
+            [
+                'Name' => 'Chang',
+                'QuantityPerUnit' => '24 - 12 oz bottles',
+                'UnitPrice' => 19,
+            ],
+        ];
     }
 }
 
 // Server instance
-
-$server = new MyAjaxServer("This is an example of divAjaxMapping server");
+$server = new MyAjaxServer('This is an example of ajaxmap server');
 $server->addClass('Encryption');
 $server->go();

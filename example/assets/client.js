@@ -1,5 +1,5 @@
 // Mapping the server
-var server = new divAjaxMapping("server.php");
+var server = new ajaxmap("server.php");
 
 /**
  * Load a list of products from server and
@@ -29,7 +29,7 @@ function loadProducts() {
     }
 }
 
-var divAjaxMappingExamples = {
+var ajaxmapExamples = {
     server: server,
 	
     serverTime: function(){
