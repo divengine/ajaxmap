@@ -1,6 +1,5 @@
 #!/bin/bash
-echo "Go to your web browser and open http://localhost:9090"
-rm ./assets/divAjaxMapping.js
-cp ../divAjaxMapping.js ./assets/divAjaxMapping.js
+rm ./assets/ajaxmap.js
+cp ../src/ajaxmap.js ./assets/ajaxmap.js
 php -S localhost:9090
-
+echo "Open your web browser at http://localhost:9090"

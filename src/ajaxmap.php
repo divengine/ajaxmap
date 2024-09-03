@@ -33,6 +33,11 @@ define("DIV_AJAX_MAPPING_LOGOUT_SUCCESSFUL", "DIV_AJAX_MAPPING_LOGOUT_SUCCESSFUL
 define("DIV_AJAX_MAPPING_METHOD_EXECUTED", "DIV_AJAX_MAPPING_METHOD_EXECUTED");
 define("DIV_AJAX_MAPPING_METHOD_NOT_EXISTS", "DIV_AJAX_MAPPING_METHOD_NOT_EXISTS");
 
+use ReflectionClass;
+use ReflectionFunction;
+use ReflectionObject;
+use Exception;
+
 /**
  * How to use?
  *
@@ -44,14 +49,19 @@ define("DIV_AJAX_MAPPING_METHOD_NOT_EXISTS", "DIV_AJAX_MAPPING_METHOD_NOT_EXISTS
  */
 class ajaxmap
 {
-
+    private $__version = "1.3";
     private $methods = [];
     private $data = [];
     public $name = null;
 
-    public function __construct($name)
+    public function __construct(string $name = "ajaxmap")
     {
         $this->name = $name;
+    }
+
+    public function getVersion()
+    {
+        return $this->__version;
     }
 
     /**
@@ -192,7 +202,7 @@ class ajaxmap
                         $classes[$arr[0]] .= "params.$p = $p;";
                     }
                 }
-                $classes[$arr[0]] .= "\n   return (new divAjaxMapping()).call(this.__server, '{$arr[0]}::{$arr[1]}',params);\n}\n";
+                $classes[$arr[0]] .= "\n   return (new ajaxmap()).call(this.__server, '{$arr[0]}::{$arr[1]}',params);\n}\n";
                 $j++;
             } else {
 
@@ -214,7 +224,7 @@ class ajaxmap
                         echo "params.$p = $p;";
                     }
                 }
-                echo "\n    return (new divAjaxMapping()).call(this.__server, '$key',params);\n }\n";
+                echo "\n    return (new ajaxmap()).call(this.__server, '$key',params);\n }\n";
             }
         }
         $i = 0;
@@ -330,7 +340,9 @@ class ajaxmap
         if (is_array($data) || is_object($data)) {
             $islist = is_array($data) && (empty($data) || array_keys($data) === range(0, count($data) - 1));
 
-            if ($islist) $json = '[' . implode(',', array_map('self::jsonEncode', $data)) . ']';
+            if ($islist) {
+                $json = '[' . implode(',', array_map(function($v) { return self::jsonEncode($v); }, $data)) . ']';
+            }
             else {
                 $items = [];
                 foreach ($data as $key => $value) {

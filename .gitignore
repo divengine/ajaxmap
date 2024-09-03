@@ -4,3 +4,8 @@
 .htpasswd
 data/*
 .idea/*
+.vscode
+composer.lock
+package-lock.json
+vendor/
+node_modules/
