@@ -50,7 +50,21 @@ var ajaxmap = function (server) {
      * Get a valiXMLHttpRequest object
      */
     this.getXMLHttpRequestObject = function () {
-        return new XMLHttpRequest();
+        var result = false;
+        try {
+            result = new XMLHttpRequest();
+        } catch (e) {
+            var XmlHttpVersions = ["MSXML2.XMLHTTP.6.0", "MSXML2.XMLHTTP.5.0",
+                "MSXML2.XMLHTTP.4.0", "MSXML2.XMLHTTP.3.0",
+                "MSXML2.XMLHTTP", "Microsoft.XMLHTTP"];
+            for (var i = 0; i < XmlHttpVersions.length && !result; i++) {
+                try {
+                    result = new ActiveXObject(XmlHttpVersions[i]);
+                } catch (e) {
+                }
+            }
+        }
+        return result;
     };
 
     /**
@@ -58,31 +72,36 @@ var ajaxmap = function (server) {
      *
      * @param Object params
      */
-    this.ajax = async function (params) {
-        if (!params.url) {
+    this.ajax = function (params) {
+
+        if (typeof params.url == 'undefined') {
             return null;
         }
-    
-        let formData = new URLSearchParams();
-        for (let key in params.data) {
-            formData.append(key, params.data[key]);
+
+        var xhr = this.getXMLHttpRequestObject();
+
+        params.data = (typeof params.data == 'undefined') ? {} : params.data;
+
+        xhr.open("POST", encodeURI(params.url), params.async);
+        xhr.setRequestHeader('Content-Type',
+            'application/x-www-form-urlencoded; charset=UTF-8');
+
+        var s = "";
+        var k = 0;
+        for (var i in params.data) {
+            if (k++ > 0)
+                s = s + "&";
+            s = s + encodeURIComponent(i) + "="
+                + this.serialize(params.data[i]);
         }
-    
-        try {
-            let response = await fetch(params.url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                },
-                body: formData.toString()
-            });
-    
-            let result = await response.json();
-            return result;
-        } catch (error) {
-            console.error('Ajax request failed', error);
-            return null;
-        }
+
+        xhr.send(s);
+
+        var result = null;
+
+        eval("result = " + xhr.responseText);
+
+        return result;
     };
 
     /**
@@ -209,11 +228,14 @@ var ajaxmap = function (server) {
      * @param {string} method
      * @param {string} params
      */
-    this.call = async function (server, method, params) {
-        return await this.ajax({
-            url: `${server}?execute=${method}`,
+    this.call = function (server, method, params) {
+
+        var result = this.ajax({
+            url: server + "?execute=" + method,
             data: params
         });
+
+        return result;
     };
 
     /**
